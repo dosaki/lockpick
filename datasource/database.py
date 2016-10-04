@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
-engine = create_engine('jdbc:mysql://localhost:3306/lockpick', convert_unicode=True)
+#connection = 'mysql://nova:Password@localhost/nova'
+connection = 'mysql://root:@localhost:3306/lockpick'
+engine = create_engine(connection, convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))

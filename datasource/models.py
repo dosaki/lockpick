@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from binascii import hexlify
 
 from database import Base
@@ -9,7 +9,7 @@ class I_Serializable():
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class User(Base, I_Serializable):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     name = Column(String(128), unique=True)
     secret = Column(String(64))
@@ -22,18 +22,22 @@ class User(Base, I_Serializable):
         return '<User %r>' % (self.name)
 
 class Game(Base, I_Serializable):
-    __tablename__ = 'games'
+    __tablename__ = 'game'
     id = Column(Integer, primary_key=True)
     name = Column(String(128), unique=True)
+    owner = Column('user_id', Integer, ForeignKey("user.id"), nullable=False)
 
-    def __init__(self, name=None):
+    def __init__(self, name, owner):
         self.name = name
+        self.owner = owner
+        self.secret = hexlify(os.urandom(64))
 
     def __repr__(self):
         return '<Game %r>' % (self.name)
 
+
 class Lock(Base, I_Serializable):
-    __tablename__ = 'locks'
+    __tablename__ = 'lock'
     id = Column(Integer, primary_key=True)
     key = Column(String(256), unique=False)
     clue = Column(String(256), unique=False)
@@ -50,7 +54,7 @@ class Lock(Base, I_Serializable):
         return '<Lock %r: %r, %r, %r>' % (self.name, self.key, self.clue, self.treasure)
 
 class UserProgress(Base, I_Serializable):
-    __tablename__ = 'users_progress'
+    __tablename__ = 'user_progress'
     id = Column(Integer, primary_key=True)
     user = Column('user_id', Integer, ForeignKey("user.id"), nullable=False)
     lock = Column('lock_id', Integer, ForeignKey("game.id"), nullable=False)
