@@ -1,12 +1,39 @@
-from flask import Flask
+import os
+
+from flask import Flask, request, session, g, redirect, url_for, abort, \
+render_template, flash, send_from_directory
 
 from datasource.database import init_db
 from datasource.database import db_session
 from datasource.models import User
 
+BASE_URL = os.path.abspath(os.path.dirname(__file__))
+CLIENT_APP_FOLDER = os.path.join(BASE_URL, "client")
+
 app = Flask(__name__)
 init_db()
 
+@app.route('/')
+def index():
+    return render_template("index.html")
+
+@app.route('/app/<path:filename>')
+def client_app_dir(filename):
+    print CLIENT_APP_FOLDER + "/app" + "/" + filename
+    return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "app"), filename)
+
+@app.route('/node_modules/<path:filename>')
+def client_node_modules_dir(filename):
+    print CLIENT_APP_FOLDER + "/node_modules" + "/" + filename
+    return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "node_modules"), filename)
+
+@app.route('/conf/<path:filename>')
+def client_conf_dir(filename):
+    print CLIENT_APP_FOLDER + "/" + filename
+    return send_from_directory(CLIENT_APP_FOLDER, filename)
+
+
+# API entrypoints
 @app.route('/unlock/<key>')
 def unlock(key):
     return "Yay"

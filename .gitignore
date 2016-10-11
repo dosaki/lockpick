@@ -87,3 +87,11 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# npm stuff
+client/node_modules/*
+client/typings/*
+
+# Typescript compiled
+client/app/*.js
+client/app/*.js.map
