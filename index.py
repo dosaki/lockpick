@@ -19,19 +19,23 @@ def index():
 
 @app.route('/app/<path:filename>')
 def client_app_dir(filename):
-    print CLIENT_APP_FOLDER + "/app" + "/" + filename
+    print CLIENT_APP_FOLDER + "/app/" + filename
     return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "app"), filename)
+
+@app.route('/styles/<path:filename>')
+def client_styles_dir(filename):
+    print CLIENT_APP_FOLDER + "/styles/" + filename
+    return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "styles"), filename)
 
 @app.route('/node_modules/<path:filename>')
 def client_node_modules_dir(filename):
-    print CLIENT_APP_FOLDER + "/node_modules" + "/" + filename
+    print CLIENT_APP_FOLDER + "/node_modules/" + filename
     return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "node_modules"), filename)
 
 @app.route('/conf/<path:filename>')
 def client_conf_dir(filename):
     print CLIENT_APP_FOLDER + "/" + filename
     return send_from_directory(CLIENT_APP_FOLDER, filename)
-
 
 # API entrypoints
 @app.route('/unlock/<key>')

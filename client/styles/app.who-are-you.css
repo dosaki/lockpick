@@ -1,0 +1,48 @@
+.outer {
+  margin-left:auto;
+  margin-right: auto;
+  width: 960px;
+}
+
+.key {
+  padding-left: 25px;
+  border-radius: 30px;
+  background: #ffdc27;
+  border: 2px solid #ffdc27;
+	width: 500px;
+  height: 20px;
+  margin-left:165px;
+  margin-top:70px;
+}
+
+.out-circle {
+  background: #ffdc27;
+	border-radius: 50%;
+	width: 200px;
+	height: 200px;
+  border: 2px solid #ffdc27;
+}
+.in-circle {
+  background: white;
+	border-radius: 50%;
+  margin: 16px 16px 16px 18px;
+	width: 160px;
+	height: 160px;
+  border: 2px solid #ffdc27;
+}
+
+.key-ends {
+  width:80px;
+  margin-left:560px;
+}
+.end {
+  display: inline-block;
+  background: #ffdc27;
+  width:20px;
+  height:60px;
+  margin-left: 4px;
+}
+
+input {
+  border: 0px;
+}

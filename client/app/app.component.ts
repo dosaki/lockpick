@@ -27,15 +27,24 @@ export class UserProgress {
 }
 
 @Component({
-  selector: 'game-submitter',
+  selector: 'who-are-you',
   template: `
-    <div>
-      <span>Hi, {{user.name}}!</span>
+    <div class="outer">
+      <div class="out-circle">
+        <div class="in-circle">
+          <div class="key">
+            Hi, <input value="{{user.name}}" placeholder="uh... whoever you are!">
+          </div>
+          <div class="key-ends">
+            <span class="end"></span>
+            <span class="end"></span>
+            <span class="end"></span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-      <input value="" placeholder="">
-    </div>
-  `
+  `,
+  styleUrls: ['styles/app.who-are-you.css']
 })
 
 export class AppComponent {
@@ -43,7 +52,7 @@ export class AppComponent {
   game: Game = null;
   user: User = {
     id: null,
-    name: "Anonymous",
+    name: null,
     secret: null
   };
 }
