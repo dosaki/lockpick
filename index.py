@@ -19,30 +19,30 @@ def index():
 
 @app.route('/app/<path:filename>')
 def client_app_dir(filename):
-    print CLIENT_APP_FOLDER + "/app/" + filename
     return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "app"), filename)
 
 @app.route('/styles/<path:filename>')
 def client_styles_dir(filename):
-    print CLIENT_APP_FOLDER + "/styles/" + filename
     return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "styles"), filename)
 
 @app.route('/node_modules/<path:filename>')
 def client_node_modules_dir(filename):
-    print CLIENT_APP_FOLDER + "/node_modules/" + filename
     return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "node_modules"), filename)
 
 @app.route('/conf/<path:filename>')
 def client_conf_dir(filename):
-    print CLIENT_APP_FOLDER + "/" + filename
     return send_from_directory(CLIENT_APP_FOLDER, filename)
+
+@app.route('/font/<path:filename>')
+def client_font_dir(filename):
+    return send_from_directory(os.path.join(CLIENT_APP_FOLDER, "node_modules", "material-design-icons", "iconfont"), filename)
 
 # API entrypoints
 @app.route('/unlock/<key>')
 def unlock(key):
     return "Yay"
 
-@app.route('/register/<username>')
+@app.route('/user/<username>', methods=['PUT'])
 def register(username):
     user = User(username)
     db_session.add(user)
@@ -54,9 +54,8 @@ def getUser(username):
     user = User.query.filter(User.name == username).first()
     return app.jsonify(name=user.name)
 
-@app.route('/user/', methods=['POST'])
+@app.route('/user/<username>', methods=['POST'])
 def getUserPrivateInfo(username):
-    username = request.args.get('username')
     secret = request.args.get('secret')
     user = User.query.filter(and_(User.name == username), User.secret == secret).first()
     if user is None:
